@@ -7,6 +7,7 @@
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 <script src="https://unpkg.com/super-hands@3.0.4/dist/super-hands.min.js"></script>
+  <script src="https://unpkg.com/networked-aframe@0.12.0/dist/networked-aframe.min.js"></script>
 
 </head>
 
@@ -31,10 +32,15 @@
 
 </a-assets>
 
-
+<a-scene
+networked-scene="
+room: FKC;
+debug: true;
+adapter: wseasyrtc;">
 
 <!-- Spieler -->
-<a-entity id="rig" movement-controls="speed:0.2">
+<a-entity id="rig" movement-controls="speed:0.2"
+networked="template:#avatar-template;attachTemplateToLocal:false;">
 
 <a-entity id="camera"
 camera
@@ -247,5 +253,23 @@ ctx.strokeRect(0,0,128,128);
 
 </script>
 
+<template id="avatar-template">
+
+<a-entity>
+
+<a-sphere color="#FFC65D" scale="0.25 0.25 0.25"></a-sphere>
+
+<a-entity class="left-hand">
+<a-box color="#4CC3D9" scale="0.1 0.1 0.2"></a-box>
+</a-entity>
+
+<a-entity class="right-hand">
+<a-box color="#EF2D5E" scale="0.1 0.1 0.2"></a-box>
+</a-entity>
+
+</a-entity>
+
+</template>
+  
 </body>
 </html>
