@@ -7,6 +7,8 @@
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 <script src="https://unpkg.com/super-hands@3.0.4/dist/super-hands.min.js"></script>
+
+<!-- Networked-Aframe -->
 <script src="https://unpkg.com/networked-aframe@0.12.0/dist/networked-aframe.min.js"></script>
 
 </head>
@@ -15,7 +17,11 @@
 
 <a-scene
 background="color: #cfeaff"
-networked-scene="room: FKC; debug: true; adapter: wseasyrtc;">
+networked-scene="
+  room: FKC;
+  adapter: socketio;
+  serverURL: https://naf-server-ll98.onrender.com;
+">
 
 <!-- Assets -->
 <a-assets>
@@ -31,21 +37,22 @@ networked-scene="room: FKC; debug: true; adapter: wseasyrtc;">
 
 <!-- Avatar Template -->
 <template id="avatar-template">
-
 <a-entity>
 
-<a-sphere color="#FFC65D" scale="0.25 0.25 0.25"></a-sphere>
+<!-- Kopf -->
+<a-sphere color="#FFC65D" scale="0.25 0.25 0.25" position="0 1.6 0"></a-sphere>
 
-<a-entity class="left-hand">
+<!-- Linke Hand -->
+<a-entity class="left-hand" position="-0.3 1.4 0">
 <a-box color="#4CC3D9" scale="0.1 0.1 0.2"></a-box>
 </a-entity>
 
-<a-entity class="right-hand">
+<!-- Rechte Hand -->
+<a-entity class="right-hand" position="0.3 1.4 0">
 <a-box color="#EF2D5E" scale="0.1 0.1 0.2"></a-box>
 </a-entity>
 
 </a-entity>
-
 </template>
 
 </a-assets>
@@ -60,19 +67,21 @@ networked-scene="room: FKC; debug: true; adapter: wseasyrtc;">
 camera
 position="0 1.6 0"
 look-controls
-networked="template:#avatar-template;attachTemplateToLocal:false;">
+networked="template:#avatar-template;attachTemplateToLocal:true;">
 </a-entity>
 
 <a-entity id="leftHand"
 hand-controls="hand: left"
 super-hands="grabStartButtons: gripdown; grabEndButtons: gripup"
-sphere-collider="objects: .interactable">
+sphere-collider="objects: .interactable"
+networked="template:#avatar-template">
 </a-entity>
 
 <a-entity id="rightHand"
 hand-controls="hand: right"
 super-hands="grabStartButtons: gripdown; grabEndButtons: gripup"
-sphere-collider="objects: .interactable">
+sphere-collider="objects: .interactable"
+networked="template:#avatar-template">
 </a-entity>
 
 </a-entity>
@@ -85,133 +94,72 @@ height="200"
 material="src:#gridCanvas; repeat:200 200; shader:flat">
 </a-plane>
 
+<!-- ===== DEINE STRUKTUREN (UNVERÄNDERT) ===== -->
+
 <!-- Diamant -->
 <a-entity position="0 3 -10">
-
 <a-entity class="interactable" grabbable stretchable draggable>
-
 <a-box depth="3" height="3" width="3" visible="false"></a-box>
-
 <a-entity gltf-model="#diamant" scale="0.6 0.6 0.6"></a-entity>
-
 </a-entity>
-
-<a-text value="Diamant"
-position="0 2 0"
-align="center"
-color="black"
-look-at="#camera"></a-text>
-
+<a-text value="Diamant" position="0 2 0" align="center" color="black" look-at="#camera"></a-text>
 </a-entity>
 
 <!-- Graphit -->
 <a-entity position="8.66 3 -5">
-
 <a-entity class="interactable" grabbable stretchable draggable>
-
 <a-box depth="3" height="3" width="3" visible="false"></a-box>
-
 <a-entity gltf-model="#graphit" scale="0.6 0.6 0.6"></a-entity>
-
 </a-entity>
-
-<a-text value="Graphit"
-position="0 2 0"
-align="center"
-color="black"
-look-at="#camera"></a-text>
-
+<a-text value="Graphit" position="0 2 0" align="center" color="black" look-at="#camera"></a-text>
 </a-entity>
 
 <!-- Eis -->
 <a-entity position="8.66 1 5">
-
 <a-entity class="interactable" grabbable stretchable draggable>
-
 <a-box depth="50" height="50" width="50" visible="false"></a-box>
-
 <a-entity gltf-model="#eis" scale="50 50 50"></a-entity>
-
 </a-entity>
-
-<a-text value="Eis"
-position="0 2 0"
-align="center"
-color="black"
-look-at="#camera"></a-text>
-
+<a-text value="Eis" position="0 2 0" align="center" color="black" look-at="#camera"></a-text>
 </a-entity>
 
 <!-- MgCl2 -->
 <a-entity position="0 3 10">
-
 <a-entity class="interactable" grabbable stretchable draggable>
-
 <a-box depth="3" height="3" width="3" visible="false"></a-box>
-
 <a-entity gltf-model="#mgcl2" scale="0.6 0.6 0.6"></a-entity>
-
 </a-entity>
-
-<a-text value="MgCl2"
-position="0 2 0"
-align="center"
-color="black"
-look-at="#camera"></a-text>
-
+<a-text value="MgCl2" position="0 2 0" align="center" color="black" look-at="#camera"></a-text>
 </a-entity>
 
 <!-- Imidazol -->
 <a-entity position="-8.66 3 5">
-
 <a-entity class="interactable" grabbable stretchable draggable>
-
 <a-box depth="3" height="3" width="3" visible="false"></a-box>
-
 <a-entity gltf-model="#imidazol" scale="0.6 0.6 0.6"></a-entity>
-
 </a-entity>
-
-<a-text value="Imidazol"
-position="0 2 0"
-align="center"
-color="black"
-look-at="#camera"></a-text>
-
+<a-text value="Imidazol" position="0 2 0" align="center" color="black" look-at="#camera"></a-text>
 </a-entity>
 
 <!-- BODIPY -->
 <a-entity position="-8.66 3 -5">
-
 <a-entity class="interactable" grabbable stretchable draggable>
-
 <a-box depth="3" height="3" width="3" visible="false"></a-box>
-
 <a-entity gltf-model="#bodipy" scale="0.5 0.5 0.5"></a-entity>
-
 </a-entity>
-
-<a-text value="BODIPY"
-position="0 2 0"
-align="center"
-color="black"
-look-at="#camera"></a-text>
-
+<a-text value="BODIPY" position="0 2 0" align="center" color="black" look-at="#camera"></a-text>
 </a-entity>
 
 <!-- Licht -->
 <a-entity light="type:ambient; intensity:1.2"></a-entity>
-
-<a-entity light="type:directional; intensity:1.2"
-position="5 10 5"></a-entity>
-
-<a-entity light="type:directional; intensity:0.8"
-position="-5 10 -5"></a-entity>
+<a-entity light="type:directional; intensity:1.2" position="5 10 5"></a-entity>
+<a-entity light="type:directional; intensity:0.8" position="-5 10 -5"></a-entity>
 
 </a-scene>
 
 <script>
 
+// Grid Texture
 const canvas = document.getElementById('gridCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -221,6 +169,15 @@ ctx.fillRect(0,0,128,128);
 ctx.strokeStyle = "#00FF00";
 ctx.lineWidth = 6;
 ctx.strokeRect(0,0,128,128);
+
+// Network Schema
+NAF.schemas.add({
+  template: '#avatar-template',
+  components: [
+    'position',
+    'rotation'
+  ]
+});
 
 </script>
 
