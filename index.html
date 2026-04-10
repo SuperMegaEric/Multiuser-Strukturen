@@ -8,9 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 <script src="https://unpkg.com/super-hands@3.0.4/dist/super-hands.min.js"></script>
 
-<!-- 👇 HIER NEU -->
-<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-
+<!-- WICHTIG: KEIN socket.io mehr -->
 <script src="https://unpkg.com/networked-aframe@0.12.0/dist/networked-aframe.min.js"></script>
 
 </head>
@@ -21,8 +19,10 @@
 background="color: #cfeaff"
 networked-scene="
   room: FKC;
-  adapter: socketio;
-  serverURL: https://naf-server-ll98.onrender.com;
+  debug: true;
+  adapter: wseasyrtc;
+  connectOnLoad: true;
+  signalingUrl: https://naf-server-ll98.onrender.com;
 ">
 
 <!-- Assets -->
@@ -42,15 +42,15 @@ networked-scene="
 <a-entity>
 
 <!-- Kopf -->
-<a-sphere color="#FFC65D" scale="0.25 0.25 0.25" position="0 1.6 0"></a-sphere>
+<a-sphere color="#FFC65D" scale="0.25 0.25 0.25"></a-sphere>
 
 <!-- Linke Hand -->
-<a-entity class="left-hand" position="-0.3 1.4 0">
+<a-entity class="left-hand">
 <a-box color="#4CC3D9" scale="0.1 0.1 0.2"></a-box>
 </a-entity>
 
 <!-- Rechte Hand -->
-<a-entity class="right-hand" position="0.3 1.4 0">
+<a-entity class="right-hand">
 <a-box color="#EF2D5E" scale="0.1 0.1 0.2"></a-box>
 </a-entity>
 
@@ -69,21 +69,19 @@ networked-scene="
 camera
 position="0 1.6 0"
 look-controls
-networked="template:#avatar-template;attachTemplateToLocal:true;">
+networked="template:#avatar-template;attachTemplateToLocal:false;">
 </a-entity>
 
 <a-entity id="leftHand"
 hand-controls="hand: left"
 super-hands="grabStartButtons: gripdown; grabEndButtons: gripup"
-sphere-collider="objects: .interactable"
-networked="template:#avatar-template">
+sphere-collider="objects: .interactable">
 </a-entity>
 
 <a-entity id="rightHand"
 hand-controls="hand: right"
 super-hands="grabStartButtons: gripdown; grabEndButtons: gripup"
-sphere-collider="objects: .interactable"
-networked="template:#avatar-template">
+sphere-collider="objects: .interactable">
 </a-entity>
 
 </a-entity>
